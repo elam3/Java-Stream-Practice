@@ -10,7 +10,73 @@ public class Driver {
 
 
         // Stream Practice Starts Here!!
-        ;
+        System.out.println("What is the average age of all customers?");
+
+        // Sanity Check (Iteratively)
+        long itr_ages = 0;
+        long itr_count = 0;
+        for (CustomerPractice cp : customerList) {
+            itr_ages += cp.getAge();
+            itr_count++;
+        }
+        System.out.println("ages: " + itr_ages);
+        System.out.println("count: " + itr_count);
+        System.out.println("itr: " + 1.0*itr_ages/itr_count);
+
+
+        // Try with Streams
+        System.out.print("str: ");
+        double str_num = customerList.stream()
+            .map(x->x.getAge())
+            .reduce(0, 
+                    (sum, age) -> sum + age,
+                    (age1, age2) -> age1 + age2
+            )/(customerList.size()/1.0);
+        System.out.println(str_num);
+
+        //Averages (Attempt 2)
+        System.out.println("Average (Attempt2): "
+            + customerList.stream()
+                .mapToLong( x -> x.getAge())
+                .average()
+                .getAsDouble()
+        );
+        System.out.println();
+
+
+        System.out.println("Create a list of all female customers that are 18-25 years old.");
+        List<CustomerPractice> femaleCustomers =
+            customerList.stream()
+                .filter(x -> x.getGender() == Gender.FEMALE)
+                .filter(x -> x.getAge() >= 18 && x.getAge() <= 25)
+                .collect(Collectors.toList());
+
+        for (CustomerPractice cp : femaleCustomers) {
+            System.out.println(cp.getGender() + "\t" + cp.getAge() + "\t" + cp.getLastName()+", "+cp.getFirstName());
+        }
+        System.out.println();
+
+
+        //Query 3: Are there any customers who haven't spent any money?
+
+
+        //Query 4: Which customer spent the most money?
+        
+
+        //Query 5: What is the average amount psent by all male custoemrs?
+
+
+        //Query 6: Create a list of all addreses of customers in California
+        
+        
+        //Query 7: Create a map of the customers in each state
+        //          key = state, value = list of customers in that state
+
+        
+        //Query 8: Create a map of the highest spending customers in each
+        //state (key:value :: state:customer)
+        
+        
     }
 
     private static void fillList(List<CustomerPractice> list) {
